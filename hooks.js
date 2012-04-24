@@ -6,11 +6,26 @@ var padManager = require("ep_etherpad-lite/node/db/PadManager");
 var authorManager = require("ep_etherpad-lite/node/db/AuthorManager");
 var readOnlyManager = require("ep_etherpad-lite/node/db/ReadOnlyManager");
 var Changeset = require("ep_etherpad-lite/static/js/Changeset");
+eejs = require("ep_etherpad-lite/node/eejs");
 
 exports.expressServer = function (hook_name, args, cb) {
   args.app.get('/copy', exports.onRequest);
 }
 
+exports.eejsBlock_editbarMenuLeft = function (hook_name, args, cb) {
+  args.content = args.content + eejs.require("ep_copypad/templates/editbarButtons.ejs", {}, module);
+  return cb();
+}
+
+exports.eejsBlock_styles = function (hook_name, args, cb) {
+    args.content = args.content + eejs.require("ep_copypad/templates/styles.ejs", {}, module);
+  return cb();
+}
+
+exports.eejsBlock_scripts = function (hook_name, args, cb) {
+    args.content = args.content + eejs.require("ep_copypad/templates/scripts.ejs", {}, module);
+  return cb();
+}
 
 exports.onRequest = function(req, res) {
   exports.createCopy(req.query.old, req.query.new, req.query.old_rev, function (err, padId) {
