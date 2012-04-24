@@ -1,0 +1,10 @@
+{
+  "parts": [
+    {
+      "name": "copypad",
+      "hooks": {
+	"expressCreateServer": "ep_copypad/hooks:expressServer"
+      }
+    }
+  ]
+}
