@@ -72,7 +72,7 @@ exports.createCopy = function (oldPadId, newPadId, cloneRevNum, cb) {
       cb();
     },
     function (cb) {
-      readOnlyManager.getIds(oldPadId, function(err, value) {
+      exports.getIds(oldPadId, function(err, value) {
         if(ERR(err, cb)) return;
         oldPadId = value.padId;
         cb();
@@ -188,5 +188,36 @@ exports.getRevisionText = function(pad, r, optInfoObj, cb) {
   exports.getInternalRevisionText(pad, r, optInfoObj, function (err, internalText) {
     if(ERR(err, cb)) return;
     cb(null, internalText.slice(0, -1));
+  });
+}
+
+
+/**
+ * returns a the padId and readonlyPadId in an object for any id
+ * @param {String} padIdOrReadonlyPadId read only id or real pad id
+ */
+exports.getIds = function(padIdOrReadonlyPadId, callback) {
+  var handleRealPadId = function () {
+    readOnlyManager.getReadOnlyId(padIdOrReadonlyPadId, function (err, value) {
+      callback(null, {
+        readOnlyPadId: value,
+        padId: padIdOrReadonlyPadId,
+        readonly: false
+      });
+    });
+  }
+
+  if (padIdOrReadonlyPadId.indexOf("r.") != 0)
+    return handleRealPadId();
+
+  readOnlyManager.getPadId(padIdOrReadonlyPadId, function (err, value) {
+    if(ERR(err, callback)) return;
+    if (value == null)
+      return handleRealPadId();
+    callback(null, {
+      readOnlyPadId: padIdOrReadonlyPadId,
+      padId: value,
+      readonly: true
+    });
   });
 }
