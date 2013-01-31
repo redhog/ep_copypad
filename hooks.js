@@ -1,12 +1,12 @@
-var ERR = require("async-stacktrace");
-var path = require('path');
-var express = require('express');
-var async = require("async");
-var padManager = require("ep_etherpad-lite/node/db/PadManager");
-var authorManager = require("ep_etherpad-lite/node/db/AuthorManager");
-var readOnlyManager = require("ep_etherpad-lite/node/db/ReadOnlyManager");
-var Changeset = require("ep_etherpad-lite/static/js/Changeset");
-eejs = require("ep_etherpad-lite/node/eejs");
+        var ERR = require("../../src/node_modules/async-stacktrace"),
+           path = require("path"),
+        express = require("../../src/node_modules/express"),
+          async = require("../../src/node_modules/async"),
+     padManager = require("ep_etherpad-lite/node/db/PadManager"),
+  authorManager = require("ep_etherpad-lite/node/db/AuthorManager"),
+readOnlyManager = require("ep_etherpad-lite/node/db/ReadOnlyManager"),
+      Changeset = require("ep_etherpad-lite/static/js/Changeset");
+           eejs = require("ep_etherpad-lite/node/eejs");
 
 exports.expressServer = function (hook_name, args, cb) {
   args.app.get('/copy', exports.onRequest);

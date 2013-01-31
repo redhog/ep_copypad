@@ -1,9 +1,8 @@
 {
   "name": "ep_copypad",
   "description": "Enables the user to copy a pad with all its content but (without any history) to a new pad",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "author": "RedHog (Egil Moeller) <egil.moller@freecode.no>",
-  "contributors": [],
-  "dependencies": { },
+  "contributors": ["johnyma22 (John McLear) <john@mclear.co.uk>"],
   "engines": { "node": ">= 0.4.1 < 0.7.0" }
 }
