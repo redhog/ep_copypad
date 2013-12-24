@@ -1,6 +1,6 @@
 {
   "name": "ep_copypad",
-  "description": "Enables the user to copy a pad with all its content but (without any history) to a new pad",
+  "description": "Enables the user to copy a pad with all its content but (without any history) to a new pad.  The difference between this and ep_copypad is that this version doesn't put a button on the editbar but puts an option in the file menu",
   "version": "0.0.3",
   "author": "RedHog (Egil Moeller) <egil.moller@freecode.no>",
   "contributors": ["johnyma22 (John McLear) <john@mclear.co.uk>"],
