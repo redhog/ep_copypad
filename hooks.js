@@ -12,8 +12,8 @@ exports.expressServer = function (hook_name, args, cb) {
   args.app.get('/copy', exports.onRequest);
 }
 
-exports.eejsBlock_editbarMenuLeft = function (hook_name, args, cb) {
-  args.content = args.content + eejs.require("ep_copypad/templates/editbarButtons.ejs", {}, module);
+exports.eejsBlock_fileMenu = function (hook_name, args, cb) {
+  args.content = args.content + eejs.require("ep_copypad/templates/file.ejs", {}, module);
   return cb();
 }
 
@@ -116,6 +116,7 @@ exports.createCopy = function (oldPadId, newPadId, cloneRevNum, cb) {
       oldPad.getInternalRevisionAText(cloneRevNum, function(err, value) { if(ERR(err, cb)) return; oldAText = value; cb(); });
     },
     function (dummy) {
+      if(author_list[0] == null) author_list = ["anonymous"];
       header = "This pad builds on [["+usedOldPadOd+"/rev."+cloneRevNum + "]], created by " + author_list.join(" & ") + "\n\n";
 
       var newPool = newPad.pool;

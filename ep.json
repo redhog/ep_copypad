@@ -4,7 +4,7 @@
       "name": "copypad",
       "hooks": {
 	"expressCreateServer": "ep_copypad/hooks:expressServer",
-        "eejsBlock_editbarMenuLeft": "ep_copypad/hooks:eejsBlock_editbarMenuLeft",
+        "eejsBlock_dd_file": "ep_copypad/hooks:eejsBlock_fileMenu",
         "eejsBlock_styles": "ep_copypad/hooks:eejsBlock_styles",
         "eejsBlock_scripts": "ep_copypad/hooks:eejsBlock_scripts"
       }
