@@ -117,7 +117,7 @@ exports.createCopy = function (oldPadId, newPadId, cloneRevNum, cb) {
     },
     function (dummy) {
       if(author_list[0] == null) author_list = ["anonymous"];
-      header = "This pad builds on [["+usedOldPadOd+"/rev."+cloneRevNum + "]], created by " + author_list.join(" & ") + "\n\n";
+      header = "This pad builds on [["+usedOldPadOd+"]], created by " + author_list.join(" & ") + "\n\n";
 
       var newPool = newPad.pool;
       newPool.fromJsonable(oldPad.pool.toJsonable());
