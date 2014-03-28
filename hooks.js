@@ -1,19 +1,19 @@
-var ERR = require("async-stacktrace");
-var path = require('path');
-var express = require('express');
-var async = require("async");
-var padManager = require("ep_etherpad-lite/node/db/PadManager");
-var authorManager = require("ep_etherpad-lite/node/db/AuthorManager");
-var readOnlyManager = require("ep_etherpad-lite/node/db/ReadOnlyManager");
-var Changeset = require("ep_etherpad-lite/static/js/Changeset");
-eejs = require("ep_etherpad-lite/node/eejs");
+        var ERR = require("../../src/node_modules/async-stacktrace"),
+           path = require("path"),
+        express = require("../../src/node_modules/express"),
+          async = require("../../src/node_modules/async"),
+     padManager = require("ep_etherpad-lite/node/db/PadManager"),
+  authorManager = require("ep_etherpad-lite/node/db/AuthorManager"),
+readOnlyManager = require("ep_etherpad-lite/node/db/ReadOnlyManager"),
+      Changeset = require("ep_etherpad-lite/static/js/Changeset");
+           eejs = require("ep_etherpad-lite/node/eejs");
 
 exports.expressServer = function (hook_name, args, cb) {
   args.app.get('/copy', exports.onRequest);
 }
 
-exports.eejsBlock_editbarMenuLeft = function (hook_name, args, cb) {
-  args.content = args.content + eejs.require("ep_copypad/templates/editbarButtons.ejs", {}, module);
+exports.eejsBlock_fileMenu = function (hook_name, args, cb) {
+  args.content = args.content + eejs.require("ep_copypad/templates/file.ejs", {}, module);
   return cb();
 }
 
@@ -116,7 +116,8 @@ exports.createCopy = function (oldPadId, newPadId, cloneRevNum, cb) {
       oldPad.getInternalRevisionAText(cloneRevNum, function(err, value) { if(ERR(err, cb)) return; oldAText = value; cb(); });
     },
     function (dummy) {
-      header = "This pad builds on [["+usedOldPadOd+"/rev."+cloneRevNum + "]], created by " + author_list.join(" & ") + "\n\n";
+      if(author_list[0] == null) author_list = ["anonymous"];
+      header = "This pad builds on [["+usedOldPadOd+"]], created by " + author_list.join(" & ") + "\n\n";
 
       var newPool = newPad.pool;
       newPool.fromJsonable(oldPad.pool.toJsonable());
