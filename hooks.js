@@ -116,17 +116,14 @@ exports.createCopy = function (oldPadId, newPadId, cloneRevNum, cb) {
       oldPad.getInternalRevisionAText(cloneRevNum, function(err, value) { if(ERR(err, cb)) return; oldAText = value; cb(); });
     },
     function (dummy) {
-      if(author_list[0] == null) author_list = ["anonymous"];
-      header = "This pad builds on [["+usedOldPadOd+"]], created by " + author_list.join(" & ") + "\n\n";
-
+      header = "";
       var newPool = newPad.pool;
       newPool.fromJsonable(oldPad.pool.toJsonable());
       var assem = Changeset.smartOpAssembler();
       assem.appendOpWithText('+', header, [], newPool);
       Changeset.appendATextToAssembler(oldAText, assem);
       assem.endDocument();
-      newPad.appendRevision(Changeset.pack(1, header.length + oldText.length + 1, assem.toString(), header + oldText));
-
+      newPad.appendRevision(Changeset.pack(1, oldText.length + 1, assem.toString(), oldText));
       return cb(null, newPadId);
     }
   ]);
